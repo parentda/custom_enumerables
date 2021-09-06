@@ -38,3 +38,10 @@ longest2 =
 #=> "sheep"
 
 puts a2, b2, c2, d2, longest2
+
+def multiply_els(array)
+  p array.inject(1) { |accum, num| accum * num }
+  p array.inject(1, :*)
+end
+
+multiply_els([2, 4, 5])
