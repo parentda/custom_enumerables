@@ -69,11 +69,31 @@ module Enumerable
     count
   end
 
-  def my_map
-    return to_enum(:my_map) unless block_given?
+  #   def my_map
+  #     return to_enum(:my_map) unless block_given?
+
+  #     output = []
+  #     my_each { |item| output << yield(item) }
+  #     output
+  #   end
+
+  #   def my_map(proc)
+  #     return to_enum(:my_map) unless block_given?
+
+  #     output = []
+  #     my_each { |item| output << proc.call(item) }
+  #     output
+  #   end
+
+  def my_map(proc = nil, &block)
+    return to_enum(:my_map) unless proc || block_given?
 
     output = []
-    my_each { |item| output << yield(item) }
+    if proc
+      my_each { |item| output << proc.call(item) }
+    elsif block_given?
+      my_each { |item| output << block.call(item) }
+    end
     output
   end
 
