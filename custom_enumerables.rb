@@ -26,4 +26,14 @@ module Enumerable
     my_each { |item| output << item if yield(item) }
     output
   end
+
+  def my_all?(pattern = nil, &block)
+    block ||= ->(item) { item }
+    if pattern
+      my_each { |item| return false unless pattern === item }
+    else
+      my_each { |item| return false unless block.call(item) }
+    end
+    true
+  end
 end
