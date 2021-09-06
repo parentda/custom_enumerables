@@ -46,4 +46,14 @@ module Enumerable
     end
     false
   end
+
+  def my_none?(pattern = nil, &block)
+    block ||= ->(item) { item }
+    if pattern
+      my_each { |item| return false if pattern === item }
+    else
+      my_each { |item| return false if block.call(item) }
+    end
+    true
+  end
 end
