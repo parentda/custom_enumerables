@@ -77,18 +77,22 @@ module Enumerable
     output
   end
 
-  def my_inject(initial = first, sym = nil, &block)
+  def my_inject(initial = nil, sym = nil, &block)
     if initial.is_a?(Symbol)
       sym = initial
-      initial = first
+      initial = nil
     end
 
-    memo = initial
+    memo = initial || first
 
     if block_given?
-      my_each { |memo, obj| memo = block.call(obj) }
-    else
-      my_each { |memo, obj| memo = memo.send(sym, obj) }
+      my_each_with_index do |obj, idx|
+        memo = block.call(memo, obj) unless initial.nil? && idx.zero?
+      end
+    elsif sym
+      my_each_with_index do |obj, idx|
+        memo = sym.to_proc.call(memo, obj) unless initial.nil? && idx.zero?
+      end
     end
     memo
   end
