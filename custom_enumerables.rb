@@ -86,13 +86,13 @@ module Enumerable
   #   end
 
   def my_map(proc = nil, &block)
-    return to_enum(:my_map) unless proc || block_given?
-
     output = []
     if proc
       my_each { |item| output << proc.call(item) }
     elsif block_given?
       my_each { |item| output << block.call(item) }
+    else
+      return to_enum(:my_map)
     end
     output
   end

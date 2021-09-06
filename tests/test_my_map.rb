@@ -19,7 +19,7 @@ b = (1..4).map { 'cat' } #=> ["cat", "cat", "cat", "cat"]
 
 a2 = (1..4).my_map { |i| i * i } #=> [1, 4, 9, 16]
 b2 = (1..4).my_map { 'cat' } #=> ["cat", "cat", "cat", "cat"]
-a3 = (1..4).my_map(Proc.new { |i| i * i }) #=> [1, 4, 9, 16]
+a3 = (1..4).my_map(Proc.new { |i| i * i }) { |i| i * i } #=> [1, 4, 9, 16]
 b3 = (1..4).my_map(Proc.new { 'cat' }) #=> ["cat", "cat", "cat", "cat"]
 
 puts '-' * 30
