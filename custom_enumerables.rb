@@ -36,4 +36,14 @@ module Enumerable
     end
     true
   end
+
+  def my_any?(pattern = nil, &block)
+    block ||= ->(item) { item }
+    if pattern
+      my_each { |item| return true if pattern === item }
+    else
+      my_each { |item| return true if block.call(item) }
+    end
+    false
+  end
 end
