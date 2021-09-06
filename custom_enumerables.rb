@@ -56,4 +56,16 @@ module Enumerable
     end
     true
   end
+
+  def my_count(input = nil)
+    count = 0
+    if block_given?
+      my_each { |item| count += 1 if yield(item) }
+    elsif input
+      my_each { |item| count += 1 if input === item }
+    else
+      count = size
+    end
+    count
+  end
 end
