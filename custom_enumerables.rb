@@ -68,4 +68,28 @@ module Enumerable
     end
     count
   end
+
+  def my_map
+    return to_enum(:my_map) unless block_given?
+
+    output = []
+    my_each { |item| output << yield(item) }
+    output
+  end
+
+  def my_inject(initial = first, sym = nil, &block)
+    if initial.is_a?(Symbol)
+      sym = initial
+      initial = first
+    end
+
+    memo = initial
+
+    if block_given?
+      my_each { |memo, obj| memo = block.call(obj) }
+    else
+      my_each { |memo, obj| memo = memo.send(sym, obj) }
+    end
+    memo
+  end
 end
